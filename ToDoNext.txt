@@ -1,4 +1,0 @@
--Main Page with the games and STEAM links(API maybe)
--Player number select 
--register a user 
--They can track what games they've played and rate the experience
