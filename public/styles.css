@@ -1,0 +1,228 @@
+body {
+    background-color: #95E1D3;
+    font-family: 'Comfortaa', cursive;
+    color: #F38181;
+    margin: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+    font-family: "Bebas Neue";
+}
+
+.container {
+    background-color: #EAFFD0;
+    border-radius: 25px;
+    padding: 0px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.main {
+    margin-bottom: 25px;
+}
+
+.headRow {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.playersBox {
+    width: 2.5rem;
+}
+.titleBox{
+    width: 100%;
+}
+.gameBox{
+    width: 75%;
+}
+input {
+    background-color: #FCE38A;
+    border-color: #F38181;
+    border-radius: 5px;
+}
+
+#about h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 0 0.5em 0;
+}
+
+#about {
+    padding: 25px;
+}
+
+/* Navigation-Bar */
+
+
+#nav {
+    background-color: #FCE38A;
+    border-radius: 25px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+nav {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin-bottom: auto;
+}
+
+nav button {
+    text-decoration: none;
+    float: right;
+    padding: 14px 16px;
+    color: #F38181;
+    font-size: 2rem;
+}
+
+nav button:hover {
+    text-decoration: underline;
+}
+
+/* Games section */
+.game {
+    background-color: #FCE38A;
+
+}
+
+.row {
+    text-align: center !important;
+}
+
+/* Game Generator */
+.divGen {
+    display: flex;
+    justify-content: center;
+    padding: 5% 0 5% 0;
+}
+
+.bottom_foot {
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+#selectText {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.container button {
+    color: #F38181;
+    background-color: #FCE38A;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: 200ms;
+    padding: 2% 5% 2% 5%;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 16px;
+}
+
+.container button:not(:disabled):hover {
+    outline: 0;
+    background: #f4e603;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+}
+
+/* ---    CheckBox    ---*/
+
+
+input[type="checkbox"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    transform: scale(0);
+    transform-origin: bottom left;
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--form-control-color);
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+}
+
+input[type="checkbox"]:disabled {
+    --form-control-color: var(--form-control-disabled);
+
+    color: var(--form-control-disabled);
+    cursor: not-allowed;
+}
+
+.d-flex {
+    display: flex !important;
+    justify-content: center;
+}
+
+:root {
+    --form-control-color: #F38181;
+}
+
+input[type="radio"] {
+    background-color: var(--form-background);
+}
+
+
+/* ---  Pop Up  --- */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    line-height: 3rem;
+}
+.popup button{
+    margin-top: 1rem;
+  }
