@@ -10,6 +10,7 @@ function GameList() {
     const [games, setGames] = useState([]);
     const [userGames, setUserGames] = useState([]);
     const [checkboxStates, setCheckboxStates] = useState([]);
+    // eslint-disable-next-line
     const [loggedIn, setLoggedInStatus] = useState(false);
 
     useEffect(() => {
@@ -30,8 +31,10 @@ function GameList() {
                 setCheckboxStates(checks);
             })
             .catch((error) => {
+                
                 console.error(error);
             });
+            // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -46,6 +49,7 @@ function GameList() {
             .catch((error) => {
                 console.error(error);
             });
+            // eslint-disable-next-line
     }, []);
 
 
@@ -130,7 +134,7 @@ function GameList() {
                     <h2>{randomGame.title}</h2>
                     <p>Players: {randomGame.min_players} - {randomGame.max_players}</p>
                     <p>Game type: {randomGame.game_type}</p>
-                    {randomGame.pack_number != 0 &&
+                    {randomGame.pack_number !== 0 &&
                         <p>Pack number: {randomGame.pack_number}</p>
                     }
                     <button onClick={ClosePopup}>Close</button>
