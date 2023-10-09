@@ -6,7 +6,7 @@ import Login from "./Login";
 import axios from "axios";
 import ErrorPopUp from "./ErrorPopUp"
 import "./styles.css";
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = vars.REACT_APP_API_URL;
 
 function App() {
   const [page, changePage] = useState('gameList');
