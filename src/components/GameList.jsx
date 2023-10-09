@@ -3,7 +3,7 @@ import Game from "./Game";
 import axios from 'axios';
 import Form from './Form';
 import UserGames from "./userGames.jsx";
-const apiUrl = vars.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function GameList() {
     let checks = [];

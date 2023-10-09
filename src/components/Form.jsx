@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import ErrorPopUp from "./ErrorPopUp";
-const apiUrl = vars.REACT_APP_API_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Form({ClosePopup}) {
     const [error, setError] = useState('');
