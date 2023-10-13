@@ -3,7 +3,7 @@ import axios from 'axios';
 import ErrorPopUp from "./ErrorPopUp";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function Form({ClosePopup}) {
+function Form() {
     const [error, setError] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ function Form({ClosePopup}) {
         gameType: '',
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const serializedFormData = {
@@ -22,19 +22,25 @@ function Form({ClosePopup}) {
             maxPlayers: formData.maxPlayers,
             gameType: formData.gameType,
         };
-
-        axios.post(`${apiUrl}/v1/auth/addGame`, serializedFormData)
-            .then((response) => {
-                setError(response.data.message);
-                setShowPopup(true);
-                window.location.reload();
-            })
-            .catch((error) => {
-                setError(error.response.data.message);
-                setShowPopup(true);
+        try {
+            const response = await axios.post(`${apiUrl}/api/v1/auth/addGame`, serializedFormData, {
+              withCredentials: true, 
             });
+      
+            setError(response.data.message);
+            setShowPopup(true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+          } catch (error) {
+            console.log(error.response.data.message);
+            setShowPopup(true);
+          }
     };
 
+    function ClosePopup() {
+        setShowPopup(false);
+    }
 
     const handleChange = (e) => {
 

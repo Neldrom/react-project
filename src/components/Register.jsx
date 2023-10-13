@@ -13,25 +13,26 @@ function Register({ ClosePopup }) {
         name: ''
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         const serializedFormData = {
             username: formData.email,
             password: formData.password,
             name: formData.name
         };
-        axios.post(`${apiUrl}/api/v1/auth/register`, serializedFormData)
-            .then((response) => {
-                setError(response.data.message);
-                setShowPopup(true);
-            })
-            .catch((error) => {
-                setError(error.response.data.message);
-                setShowPopup(true);
+        try {
+            const response = await axios.post(`${apiUrl}/api/v1/auth/register`, serializedFormData, {
+                withCredentials: true,
             });
+            setError(response.data.message);
+            setShowPopup(true);
+        } catch (error) {
+            console.log(error.response.data.message);
+            setShowPopup(true);
+        }
         setFormData({
             email: '',
             password: '',
-            name:'',
+            name: '',
         })
     };
 
@@ -71,10 +72,10 @@ function Register({ ClosePopup }) {
             <button onClick={ClosePopup}>Close</button>
         </div>
         {showPopup &&
-                <ErrorPopUp
-                    ClosePopup={ClosePopup}
-                    error={error}
-                />
+            <ErrorPopUp
+                ClosePopup={ClosePopup}
+                error={error}
+            />
         }
     </div>
 }

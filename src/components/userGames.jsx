@@ -3,10 +3,10 @@ import axios from 'axios';
 import ErrorPopUp from "./ErrorPopUp";
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function UserGames({ title, min_players, max_players, game_type, id, checked }){
+function UserGames({ title, min_players, max_players, game_type, id, checked }) {
     const [isChecked, setIsChecked] = useState(checked);
     const [error, setError] = useState('');
-    const [showPopup,setShowPopup] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
@@ -16,18 +16,25 @@ function UserGames({ title, min_players, max_players, game_type, id, checked }){
     }, [checked]);
 
     function deleteGame(title) {
-        axios.delete(`${apiUrl}/api/v1/auth/deleteGame/${title}`)
-            .then((response) => {
-                setError(response.data.message);
-                setShowPopup(true);
+        fetch(`${apiUrl}/api/v1/auth/deleteGame/${title}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Netowrk response was not ok')
+                }
+                return response.json();
             })
-            .catch((error) => {
-                setError(error.response.data.message);
-                setShowPopup(true);
-            });
-            window.location.reload();
+            .then((data) => {
+            setError(data.message);
+            setShowPopup(true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        });
     }
-    function closePopup(){
+    function closePopup() {
         setShowPopup(false);
     }
 

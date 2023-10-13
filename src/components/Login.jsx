@@ -12,24 +12,28 @@ function Login({ ClosePopup }) {
         password: ''
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const serializedFormData = {
             username: formData.email,
             password: formData.password,
         };
-
-        axios.post(`${apiUrl}/api/v1/auth/login`, serializedFormData)
-            .then((response) => {
-                setError(response.data.message);
-                setShowPopup(true);
-                window.location.reload();
-            })
-            .catch((error) => {
-                setError(error.response.data.message);
-                setShowPopup(true);
+        console.log(serializedFormData);
+        try {
+            const response = await axios.post(`${apiUrl}/api/v1/auth/login`, serializedFormData, {
+              withCredentials: true, 
             });
+      
+            setError(response.data.message);
+            setShowPopup(true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+          } catch (error) {
+            console.log(error.response.data.message);
+            setShowPopup(true);
+          }
         setFormData({
             email: '',
             password: ''
@@ -47,7 +51,7 @@ function Login({ ClosePopup }) {
 
     return <div className="popup-overlay">
         <div className="popup">
-            <form>
+            <section>
                 <h1>Sign in</h1>
                 <input
                     type="email"
@@ -62,7 +66,7 @@ function Login({ ClosePopup }) {
                     value={formData.password}
                     onChange={handleChange}></input>
                 <button type="submit" onClick={handleSubmit}>Sign In</button>
-            </form>
+            </section>
             <button onClick={ClosePopup}>Close</button>
         </div>
         <div>

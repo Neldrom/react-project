@@ -4,7 +4,8 @@ import About from "./About";
 import Register from "./Register";
 import Login from "./Login";
 import axios from "axios";
-import ErrorPopUp from "./ErrorPopUp"
+import ErrorPopUp from "./ErrorPopUp";
+import Cookies from 'js-cookie';
 import "./styles.css";
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -16,9 +17,18 @@ function App() {
   const [loggedIn, setLoggedInStatus] = useState(false);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/api/v1/auth/loginStatus`)
-      .then((response) => {
-        setLoggedInStatus(response.data.status);
+    fetch(`${apiUrl}/api/v1/auth/loginStatus`, {
+      method: 'POST',
+      credentials: 'include'
+    })
+    .then(response =>{
+      if(!response.ok){
+        throw new Error('Netowrk response was not ok')
+      }
+      return response.json();
+    })
+      .then((data) => {
+        setLoggedInStatus(data.status);
       })
   })
 
@@ -36,15 +46,22 @@ function App() {
   }
 
   const handleLogoutClick = (e) => {
-    axios.post(`${apiUrl}/api/v1/auth/logout`)
+    axios.post(`${apiUrl}/api/v1/auth/logout`, {}, {
+      withCredentials: true
+    })
       .then((response) => {
-        window.location.reload();
         setPopupMessage(response.data.message);
+  
+        Cookies.remove('dron'); 
+  
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   return <div><h1>JackBox Party Game Picker</h1>
     <div className="container main">
@@ -73,7 +90,7 @@ function App() {
         <About />
       }
       {page === 'gameList' &&
-        <GameList />
+        <GameList loggedIn={loggedIn} />
       }
       {showPopup && signingType === "signIn" &&
         <Login ClosePopup={ClosePopup} />

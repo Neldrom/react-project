@@ -14,9 +14,19 @@ function GameList() {
     const [loggedIn, setLoggedInStatus] = useState(false);
 
     useEffect(() => {
-        axios.get(`${apiUrl}/api/v1/auth/loginStatus`)
-            .then((response) => {
-                setLoggedInStatus(response.data.status);
+        fetch(`${apiUrl}/api/v1/auth/loginStatus`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Netowrk response was not ok')
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data.status);
+                setLoggedInStatus(data.status);
             })
     })
 
@@ -33,20 +43,27 @@ function GameList() {
             .catch((error) => {
                 console.error(error);
             });
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        axios.get(`${apiUrl}/api/v1/auth/loadUserGames`)
-            .then((response) => {
-                setUserGames(response.data);
-                for (index; index < checks.length + response.data.length - 2; index++) {
+        fetch(`${apiUrl}/api/v1/auth/loadUserGames`, {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Netowrk response was not ok')
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setUserGames(data);
+                for (index; index < checks.length + data.length - 2; index++) {
                     checks[index] = false;
                 }
-                console.log(checks.length);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        })
+        // eslint-disable-next-line
     }, []);
 
 
@@ -71,13 +88,13 @@ function GameList() {
         games.forEach(game => {
             allGames.push(game)
         });
-        userGames.forEach(game => {
-            allGames.push(game)
-        });
-        console.log(games);
+        if (loggedIn) {
+            userGames.forEach(game => {
+                allGames.push(game)
+            });
+        }
         if (selectedOption === 'option1') {
             const inputs = Array.from(document.querySelectorAll("input[type='checkBox']"));
-            // console.log(inputs);
             let newGames = [];
 
             for (let i = 0; i < inputs.length; i++) {
@@ -131,7 +148,7 @@ function GameList() {
                     <h2>{randomGame.title}</h2>
                     <p>Players: {randomGame.min_players} - {randomGame.max_players}</p>
                     <p>Game type: {randomGame.game_type}</p>
-                    {randomGame.pack_number != 0 &&
+                    {randomGame.pack_number !== 0 &&
                         <p>Pack number: {randomGame.pack_number}</p>
                     }
                     <button onClick={ClosePopup}>Close</button>
@@ -162,7 +179,7 @@ function GameList() {
                 checked={checkboxStates[index]}
             />
         ))}
-        <Form ClosePopup={ClosePopup} />
+        <Form />
         <div className="divGen footer row">
             <div className="listOptions col bottom_foot">
                 <dl>
